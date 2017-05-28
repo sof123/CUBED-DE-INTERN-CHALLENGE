@@ -5,7 +5,8 @@ const bindDoComputationToDispatch = () => (dispatch) => {
   var mostPopularColor = computeMostPopular(db, "color")
   var mostPopularManufacturer = computeMostPopular(db, "manufacturer")
   var averageDescriptionLength = computeAverageDescriptionLength(db)
-  dispatch({type: COMPUTE, payload: [mostPopularColor, mostPopularManufacturer, averageDescriptionLength]})
+  var averagePrice = computeAveragePrice(db)
+  dispatch({type: COMPUTE, payload: [mostPopularColor, mostPopularManufacturer, averageDescriptionLength, averagePrice]})
 
 }
 
@@ -27,6 +28,36 @@ function computeAverageDescriptionLength(dbFile) {
     }
   });
   return {averageLength: totalLength/totalNumDescriptions}
+}
+
+function dollarToFloat(input) {
+  var dollarString
+  for (var i = 1; i < input.length; i++){
+    dollarString+=input.charAt(i)
+  }
+  return parseFloat(dollarString)
+}
+
+function computeAveragePrice(dbFile){
+  var objectArray = dbFile['default']
+  var ebayTotalPrice = 0
+  var amazonTotalPrice = 0
+  var ebayTotalCount = 0
+  var amazonTotalCount = 0
+  objectArray.forEach(function(product) {
+    if (product['price']){
+      if (product['source'] == 'ebay') {
+        ebayTotalPrice += dollarToFloat(product['price'])
+        ebayTotalCount+=1
+      }
+      else if (product['source'] == 'amazon') {
+        amazonTotalPrice += dollarToFloat(product['price'])
+        amazonTotalCount+=1
+      }
+    }
+  });
+  return {ebayAveragePrice: ebayTotalPrice/ebayTotalCount,
+          amazonAveragePrice: amazonTotalPrice/amazonTotalCount}
 }
 
 function computeMostPopular(dbFile, attribute, callback) {

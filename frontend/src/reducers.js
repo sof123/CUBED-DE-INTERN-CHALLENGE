@@ -18,7 +18,9 @@ export const Reducer = (state =  {
         return { ...state, nextId: state.nextId + 1, location: "Metrics.js",
            mostPopularColor: action.payload[0]['attribute'],
            mostPopularManufacturer: action.payload[1]['attribute'],
-           averageLength: action.payload[2]['averageLength']
+           averageLength: action.payload[2]['averageLength'],
+           ebayAveragePrice: action.payload[3]['ebayAveragePrice'],
+           amazonAveragePrice: action.payload[3]['amazonAveragePrice']
        }
      }
 		default:
