@@ -31,11 +31,12 @@ function computeAverageDescriptionLength(dbFile) {
 }
 
 function dollarToFloat(input) {
-  var dollarString
+  var dollarString = ""
   for (var i = 1; i < input.length; i++){
     dollarString+=input.charAt(i)
   }
-  return parseFloat(dollarString)
+  var num = parseFloat(dollarString)
+  return num
 }
 
 function computeAveragePrice(dbFile){
@@ -56,8 +57,8 @@ function computeAveragePrice(dbFile){
       }
     }
   });
-  return {ebayAveragePrice: ebayTotalPrice/ebayTotalCount,
-          amazonAveragePrice: amazonTotalPrice/amazonTotalCount}
+  return {ebayAveragePrice: "$" + (ebayTotalPrice/ebayTotalCount).toFixed(2),
+          amazonAveragePrice: "$" + (amazonTotalPrice/amazonTotalCount).toFixed(2)}
 }
 
 function computeMostPopular(dbFile, attribute, callback) {
