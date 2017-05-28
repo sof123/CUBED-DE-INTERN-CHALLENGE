@@ -1,0 +1,4 @@
+Most popular manufacturer (buy from brands with brand recognition)
+Most popular color (good color to make product)
+Average description length (keep it short, go with this legnth etc)
+X percent of db cost more than Y
